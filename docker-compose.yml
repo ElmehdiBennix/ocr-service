@@ -1,0 +1,111 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: ocr-postgres
+    environment:
+      POSTGRES_USER: ocr_user
+      POSTGRES_PASSWORD: ocr_password
+      POSTGRES_DB: ocr_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ocr_user -d ocr_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ocr-network
+
+  # Redis Cache & Queue
+  redis:
+    image: redis:7-alpine
+    container_name: ocr-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ocr-network
+
+  # FastAPI Application
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ocr-api
+    environment:
+      DATABASE_URL: postgresql+asyncpg://ocr_user:ocr_password@postgres:5432/ocr_db
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-in-production-minimum-32-characters-long}
+      CELERY_BROKER_URL: redis://redis:6379/1
+      CELERY_RESULT_BACKEND: redis://redis:6379/2
+    volumes:
+      - ./app:/app/app:ro
+      - ./frontend:/app/frontend:ro
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - ocr-network
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Celery Worker
+  celery-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ocr-celery
+    environment:
+      DATABASE_URL: postgresql+asyncpg://ocr_user:ocr_password@postgres:5432/ocr_db
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: ${SECRET_KEY:-your-secret-key-change-in-production-minimum-32-characters-long}
+      CELERY_BROKER_URL: redis://redis:6379/1
+      CELERY_RESULT_BACKEND: redis://redis:6379/2
+    volumes:
+      - ./app:/app/app:ro
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - ocr-network
+    command: celery -A app.celery_app worker --loglevel=info
+
+  # Nginx Reverse Proxy (Production)
+  nginx:
+    image: nginx:alpine
+    container_name: ocr-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - ./frontend:/usr/share/nginx/html:ro
+    depends_on:
+      - api
+    networks:
+      - ocr-network
+    profiles:
+      - production
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  ocr-network:
+    driver: bridge

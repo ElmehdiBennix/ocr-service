@@ -1,0 +1,4 @@
+- **System**: Aether Hive Mind
+- **Objective**: Synchronized Research & Iteration
+- **Owner**: Rambeau
+- **Assistant**: Aether

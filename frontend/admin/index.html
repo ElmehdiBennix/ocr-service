@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR API - Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h1>OCR<span>API</span></h1>
+                <p>Admin Dashboard</p>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#overview" class="nav-item active" data-section="overview">
+                    <span class="icon">📊</span>
+                    Overview
+                </a>
+                <a href="#users" class="nav-item" data-section="users">
+                    <span class="icon">👥</span>
+                    Users
+                </a>
+                <a href="#api-keys" class="nav-item" data-section="api-keys">
+                    <span class="icon">🔑</span>
+                    API Keys
+                </a>
+                <a href="#usage" class="nav-item" data-section="usage">
+                    <span class="icon">📈</span>
+                    Usage Stats
+                </a>
+                <a href="#settings" class="nav-item" data-section="settings">
+                    <span class="icon">⚙️</span>
+                    Settings
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="/" class="btn-secondary">Back to Site</a>
+                <a href="/docs" class="btn-outline">API Docs</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1 id="page-title">Overview</h1>
+                <div class="header-actions">
+                    <button class="btn-primary" onclick="refreshData()">🔄 Refresh</button>
+                    <div class="user-menu">
+                        <span>Admin User</span>
+                        <button class="btn-outline" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Overview Section -->
+            <section id="overview-section" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-content">
+                            <h3 id="total-users">0</h3>
+                            <p>Total Users</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">🔑</div>
+                        <div class="stat-content">
+                            <h3 id="total-keys">0</h3>
+                            <p>Active API Keys</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📊</div>
+                        <div class="stat-content">
+                            <h3 id="requests-today">0</h3>
+                            <p>Requests Today</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-content">
+                            <h3 id="avg-response">0ms</h3>
+                            <p>Avg Response Time</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Request Volume</h3>
+                        <div id="requests-chart" class="chart-placeholder">
+                            Chart will be rendered here
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Recent Activity</h3>
+                        <div id="activity-log">
+                            <div class="activity-item">
+                                <span class="activity-time">2 min ago</span>
+                                <span class="activity-text">New user registered: user@example.com</span>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-time">5 min ago</span>
+                                <span class="activity-text">API key created: ocr_xxx...</span>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-time">10 min ago</span>
+                                <span class="activity-text">OCR request processed: document.pdf</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Users Section -->
+            <section id="users-section" class="content-section">
+                <div class="section-header">
+                    <h2>User Management</h2>
+                    <button class="btn-primary" onclick="createUser()">+ New User</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Created</th>
+                                <th>Quota</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table">
+                            <tr>
+                                <td colspan="6" class="loading">Loading users...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- API Keys Section -->
+            <section id="api-keys-section" class="content-section">
+                <div class="section-header">
+                    <h2>API Keys</h2>
+                    <input type="text" placeholder="Search keys..." class="search-input">
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>User</th>
+                                <th>Status</th>
+                                <th>Rate Limit</th>
+                                <th>Created</th>
+                                <th>Last Used</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="keys-table">
+                            <tr>
+                                <td colspan="7" class="loading">Loading API keys...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Usage Stats Section -->
+            <section id="usage-section" class="content-section">
+                <h2>Usage Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3 id="total-requests">0</h3>
+                        <p>Total Requests</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="total-data">0 MB</h3>
+                        <p>Data Processed</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="success-rate">0%</h3>
+                        <p>Success Rate</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="content-section">
+                <h2>System Settings</h2>
+                <div class="settings-form">
+                    <div class="form-group">
+                        <label>Rate Limit (per minute)</label>
+                        <input type="number" value="60" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Max File Size (MB)</label>
+                        <input type="number" value="50" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Default Quota</label>
+                        <input type="number" value="1000" class="form-control">
+                    </div>
+                    <button class="btn-primary">Save Settings</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

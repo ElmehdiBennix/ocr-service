@@ -134,10 +134,26 @@ def parse_html(file_path: str) -> str:
     except Exception as e:
         raise ParsingError(f"Error parsing HTML: {e}")
 
+
+# OpenCV preprocessing disabled for now (optional enhancement)
+# import cv2
+# 
+# def preprosses_image(file_path: str) -> str :
+#     try:
+#         img = cv2.imread(file_path, cv2.IMREAD_GRAYSCALE)
+#         img = cv2.threshold(file_path, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+#         img = cv2.medianBlur(file_path, 3)
+# 
+#         return img
+#     except Exception as e:
+#         raise ParsingError(f\"Erro  {e}\")
+
 def parse_image(file_path: str) -> str:
     """Extracts text from an image file using OCR."""
     try:
+
         return pytesseract.image_to_string(file_path)
+
     except Exception as e:
         raise ParsingError(f"Error parsing image: {e}")
 

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise OCR API - Powerful Document Text Extraction Service</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Enterprise-grade OCR API for extracting text from PDFs, images, and documents. Fast, secure, and scalable text extraction service with simple REST API.">
+    <meta name="keywords" content="OCR API, text extraction, PDF parsing, document OCR, enterprise OCR service, image to text">
+    <meta name="author" content="Enterprise OCR">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Enterprise OCR API - Document Text Extraction">
+    <meta property="og:description" content="Extract text from any document with our powerful OCR API. Supports PDF, images, DOCX, and 15+ formats.">
+    <meta property="og:image" content="/assets/og-image.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Enterprise OCR API">
+    <meta property="twitter:description" content="Extract text from any document with our powerful OCR API">
+    
+    <!-- Schema.org markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Enterprise OCR API",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "description": "Enterprise-grade OCR API for document text extraction"
+    }
+    </script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <h1>OCR<span>API</span></h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="/docs">API Docs</a></li>
+                <li><a href="#" class="btn-primary">Get Started</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Enterprise-Grade OCR API</h1>
+                <p class="hero-subtitle">Extract text from any document with a simple API call. Fast, accurate, and scalable.</p>
+                <div class="hero-cta">
+                    <a href="/docs" class="btn-primary btn-large">View Documentation</a>
+                    <a href="#demo" class="btn-secondary btn-large">Try Demo</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <strong>15+</strong>
+                        <span>File Formats</span>
+                    </div>
+                    <div class="stat">
+                        <strong>99.9%</strong>
+                        <span>Uptime SLA</span>
+                    </div>
+                    <div class="stat">
+                        <strong>&lt;2s</strong>
+                        <span>Avg Response</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose Our OCR API?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Process documents in under 2 seconds with our optimized OCR engine</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Private</h3>
+                    <p>Enterprise-grade security with encrypted data transfer and storage</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📄</div>
+                    <h3>15+ Formats</h3>
+                    <p>PDF, DOCX, images, XLSX, PPTX, and more - we support them all</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Usage Analytics</h3>
+                    <p>Track API usage, performance metrics, and costs in real-time</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>API Versioning</h3>
+                    <p>Stable v1 API with backwards compatibility guaranteed</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Rate Limiting</h3>
+                    <p>Fair usage policies with customizable rate limits per tier</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Example Section -->
+    <section class="code-example">
+        <div class="container">
+            <h2 class="section-title">Simple Integration</h2>
+            <div class="code-tabs">
+                <button class="tab-button active" data-tab="curl">cURL</button>
+                <button class="tab-button" data-tab="python">Python</button>
+                <button class="tab-button" data-tab="javascript">JavaScript</button>
+            </div>
+            <div class="code-content">
+                <pre class="code-block active" id="curl"><code>curl -X POST "https://api.example.com/v1/ocr/extract" \
+  -H "X-API-Key: YOUR_API_KEY" \
+  -F "file=@document.pdf"</code></pre>
+                <pre class="code-block" id="python"><code>import requests
+
+response = requests.post(
+    'https://api.example.com/v1/ocr/extract',
+    headers={'X-API-Key': 'YOUR_API_KEY'},
+    files={'file': open('document.pdf', 'rb')}
+)
+print(response.json()['content'])</code></pre>
+                <pre class="code-block" id="javascript"><code>const formData = new FormData();
+formData.append('file', fileInput.files[0]);
+
+fetch('https://api.example.com/v1/ocr/extract', {
+  method: 'POST',
+  headers: {'X-API-Key': 'YOUR_API_KEY'},
+  body: formData
+}).then(r => r.json()).then(data => console.log(data.content));</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <h2 class="section-title">Simple, Transparent Pricing</h2>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">0</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <ul class="features-list">
+                        <li>✓ 1,000 requests/month</li>
+                        <li>✓ 60 requests/minute</li>
+                        <li>✓ All file formats</li>
+                        <li>✓ Email support</li>
+                    </ul>
+                    <a href="#" class="btn-outline">Get Started</a>
+                </div>
+                <div class="pricing-card featured">
+                    <div class="badge">Most Popular</div>
+                    <h3>Pro</h3>
+                    <div class="price">
+                        <span class="currency">$</span>
+                        <span class="amount">49</span>
+                        <span class="period">/month</span>
+                    </div>
+                    <ul class="features-list">
+                        <li>✓ 50,000 requests/month</li>
+                        <li>✓ 300 requests/minute</li>
+                        <li>✓ All file formats</li>
+                        <li>✓ Priority support</li>
+                        <li>✓ Usage analytics</li>
+                        <li>✓ Batch processing</li>
+                    </ul>
+                    <a href="#" class="btn-primary">Get Started</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">
+                        <span class="amount">Custom</span>
+                    </div>
+                    <ul class="features-list">
+                        <li>✓ Unlimited requests</li>
+                        <li>✓ Custom rate limits</li>
+                        <li>✓ All file formats</li>
+                        <li>✓ 24/7 dedicated support</li>
+                        <li>✓ SLA guarantee</li>
+                        <li>✓ On-premise deployment</li>
+                    </ul>
+                    <a href="#" class="btn-outline">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>OCR<span>API</span></h3>
+                    <p>Enterprise-grade document text extraction</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="/docs">Documentation</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="/redoc">API Reference</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 OCR API. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
